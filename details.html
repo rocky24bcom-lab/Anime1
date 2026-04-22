@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Anime Details | AnimeWorld</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .details-wrapper { min-height: 100vh; background: #0f0f10; padding: 100px 8%; display: flex; align-items: center; }
+        .details-container { display: flex; gap: 50px; width: 100%; animation: fadeIn 0.8s ease; }
+        .poster img { width: 350px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+        .content h1 { font-size: 3.5rem; color: #ff4757; margin-bottom: 10px; }
+        .rating-tag { color: #f1c40f; font-size: 1.2rem; margin-bottom: 15px; display: block; }
+        .meta-info span { background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 20px; margin-right: 10px; font-size: 0.9rem; }
+        .description { font-size: 1.1rem; color: #ccc; line-height: 1.8; margin: 25px 0; max-width: 700px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <nav>
+        <h2>AnimeWorld 🌸</h2>
+        <div><a href="index.html">Home</a><a href="anime-list.html">Anime List</a><a href="watchlist.html">Watchlist</a></div>
+    </nav>
+
+    <div class="details-wrapper">
+        <div class="details-container">
+            <div class="poster"><img id="animeImg" src="" alt="Poster"></div>
+            <div class="content">
+                <span id="animeRating" class="rating-tag"></span>
+                <h1 id="animeTitle">Anime Name</h1>
+                <div id="animeMeta" class="meta-info"></div>
+                <p id="animeDesc" class="description"></p>
+                <button class="btn" onclick="addToWatchlist()">Add to Watchlist</button>
+                <a href="anime-list.html" class="btn" style="background:transparent; border:1px solid white; margin-left:10px;">Back</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const animeDatabase = {
+            "jujutsu kaisen": { title: "Jujutsu Kaisen", img: "jujustu kaisen.jpg", rating: "⭐ 9.8", meta: ["Action", "Supernatural"], desc: "Yuji Itadori joins a secret organization of Jujutsu Sorcerers to kill a powerful Curse named Ryomen Sukuna." },
+            "naruto": { title: "Naruto", img: "naruto.jpg", rating: "⭐ 9.6", meta: ["Ninja", "Adventure"], desc: "Naruto Uzumaki, a young ninja who seeks recognition and dreams of becoming the Hokage." },
+            "attack on titan": { title: "Attack on Titan", img: "attack on titan.jpg", rating: "⭐ 9.9", meta: ["Dark Fantasy", "Military"], desc: "Eren Jaeger vows to cleanse the earth of giant humanoid Titans that brought humanity to the brink of extinction." },
+            "black clover": { title: "Black Clover", img: "black clover.jpg", rating: "⭐ 8.7", meta: ["Magic", "Shonen"], desc: "Asta and Yuno are orphans who compete to become the Wizard King." },
+            "clannad": { title: "Clannad", img: "clannad.jpg", rating: "⭐ 9.2", meta: ["Romance", "Drama"], desc: "A cynical high school student's life changes when he meets a shy girl named Nagisa." },
+            "grand blue": { title: "Grand Blue", img: "grand blue.jpg", rating: "⭐ 8.9", meta: ["Comedy", "Seinen"], desc: "A hilarious dive into college life, drinking parties, and diving adventures." }
+        };
+
+        
+        const params = new URLSearchParams(window.location.search);
+        const nameQuery = params.get('name') ? params.get('name').toLowerCase().trim() : "jujutsu kaisen";
+        
+        const data = animeDatabase[nameQuery] || animeDatabase["jujutsu kaisen"];
+
+        // UI Update
+        document.getElementById('animeTitle').innerText = data.title;
+        document.getElementById('animeImg').src = data.img;
+        document.getElementById('animeRating').innerText = data.rating + " / 10 | Trending";
+        document.getElementById('animeDesc').innerText = data.desc;
+        document.getElementById('animeMeta').innerHTML = data.meta.map(m => `<span>${m}</span>`).join('');
+
+        function addToWatchlist() {
+            let list = JSON.parse(localStorage.getItem('myWatchlist')) || [];
+            if(!list.some(item => item.title === data.title)) {
+                list.push({ title: data.title, img: data.img });
+                localStorage.setItem('myWatchlist', JSON.stringify(list));
+                alert(data.title + " added to Watchlist!");
+            } else { alert("Already in Watchlist!"); }
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

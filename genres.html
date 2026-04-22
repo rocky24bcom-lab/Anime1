@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Genres | Anime World</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: #0f0f10;
+            color: white;
+        }
+        .genres-header {
+            padding: 100px 8% 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        /* Aesthetic Back Button */
+        .back-btn {
+            text-decoration: none;
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        .back-btn:hover {
+            background: #ff4757;
+            border-color: #ff4757;
+            transform: translateX(-5px);
+        }
+        .filter-container {
+            padding: 20px 8%;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .genre-pill {
+            padding: 10px 25px;
+            background: #1a1a1d;
+            border: 1px solid #333;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+        .genre-pill:hover, .genre-pill.active {
+            background: #ff4757;
+            border-color: #ff4757;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
+        }
+        #genre-display {
+            padding: 20px 8% 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h2>AnimeWorld 🌸</h2>
+        <div>
+            <a href="index.html">Home</a>
+            <a href="anime-list.html">Anime List</a>
+            <a href="watchlist.html">Watchlist</a>
+        </div>
+    </nav>
+
+    <div class="genres-header">
+        <a href="index.html" class="back-btn">← Back to Home</a>
+        <h1>Explore by Genre</h1>
+    </div>
+
+    <div class="filter-container">
+        <div class="genre-pill active" onclick="filterBy('All', this)">All</div>
+        <div class="genre-pill" onclick="filterBy('Action', this)">Action</div>
+        <div class="genre-pill" onclick="filterBy('Romance', this)">Romance</div>
+        <div class="genre-pill" onclick="filterBy('Comedy', this)">Comedy</div>
+        <div class="genre-pill" onclick="filterBy('Drama', this)">Drama</div>
+    </div>
+
+    <div id="genre-display">
+        <div id="results-grid" class="grid">
+            </div>
+    </div>
+
+    <script>
+        const animeList = [
+            { name: "Jujutsu Kaisen", img: "jujustu kaisen.jpg", genre: "Action" },
+            { name: "Naruto", img: "naruto.jpg", genre: "Action" },
+            { name: "Attack on Titan", img: "attack on titan.jpg", genre: "Action" },
+            { name: "Black Clover", img: "black clover.jpg", genre: "Action" },
+            { name: "Clannad", img: "clannad.jpg", genre: "Romance" },
+            { name: "Grand Blue", img: "grand blue.jpg", genre: "Comedy" }
+        ];
+
+        function filterBy(genre, element) {
+            // Pill color change
+            document.querySelectorAll('.genre-pill').forEach(p => p.classList.remove('active'));
+            element.classList.add('active');
+
+            const grid = document.getElementById('results-grid');
+            
+            // Logic to filter
+            const filtered = genre === 'All' 
+                ? animeList 
+                : animeList.filter(a => a.genre === genre);
+
+            // Display Results
+            grid.innerHTML = filtered.map(anime => `
+                <div class="card" onclick="location.href='details.html?name=${anime.name}'">
+                    <img src="${anime.img}" alt="${anime.name}">
+                    <div class="card-info">
+                        <h3>${anime.name}</h3>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        
+        window.onload = () => filterBy('All', document.querySelector('.genre-pill'));
+    </script>
+<script src="script.js"></script>
+</body>
+</html>

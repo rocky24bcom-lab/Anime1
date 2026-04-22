@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Watchlist | Anime World</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <nav>
+    <div style="display: flex; align-items: center;">
+        <a href="home.html" style="text-decoration:none; color:white; margin-right:20px; font-size:1.2rem;">
+           <span style="color:#ff4757;">❮</span> Back
+        </a>
+        <h2>AnimeWorld 🌸</h2>
+    </div>
+    <div>
+        <a href="index.html">Home</a>
+        <a href="anime-list.html">Anime</a>
+    </div>
+</nav>
+    </nav>
+
+    <div class="container">
+        <h1>My Watchlist</h1>
+        <div id="watchlist-grid" class="grid">
+            </div>
+        <div id="empty-msg" style="text-align: center; margin-top: 50px; display: none;">
+            <p>Your watchlist is empty. Start adding some!</p>
+            <br>
+            <a href="anime-list.html" class="btn">Explore Anime</a>
+        </div>
+    </div>
+
+    <script>
+        function displayWatchlist() {
+            const list = JSON.parse(localStorage.getItem('myWatchlist')) || [];
+            const grid = document.getElementById('watchlist-grid');
+            const msg = document.getElementById('empty-msg');
+
+            if(list.length === 0) {
+                msg.style.display = 'block';
+                return;
+            }
+
+            grid.innerHTML = list.map(anime => `
+                <div class="card">
+                    <img src="${anime.img}" alt="${anime.title}">
+                    <div class="card-info">
+                        <h3>${anime.title}</h3>
+                        <button onclick="removeFromWatchlist('${anime.title}')" style="background:none; border:none; color:#ff4757; cursor:pointer; margin-top:10px;">Remove</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function removeFromWatchlist(title) {
+            let list = JSON.parse(localStorage.getItem('myWatchlist')) || [];
+            list = list.filter(item => item.title !== title);
+            localStorage.setItem('myWatchlist', JSON.stringify(list));
+            displayWatchlist();
+        }
+
+        displayWatchlist();
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

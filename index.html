@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Anime World | Home</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('attack on titan.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h2>AnimeWorld 🌸</h2>
+        <div>
+            <a href="index.html">Home</a>
+            <a href="anime-list.html">Anime</a>
+            <a href="details.html">Details</a>
+            <a href="genres.html">Genres</a>
+            <a href="watchlist.html">Watchlist</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Welcome to Anime World</h1>
+        <p>Your ultimate destination for high-quality anime updates.</p>
+        <a href="anime-list.html" class="btn">Explore Now</a>
+    </section>
+
+    <div class="container">
+        <h2>Trending Now</h2>
+        <div class="grid">
+            <div class="card" onclick="window.location.href='details.html?name=jujustu kaisen'">
+                <img src="jujustu kaisen.jpg" alt="JJK">
+                <div class="card-info">
+                    <h3>Jujutsu Kaisen</h3>
+                </div>
+            </div>
+            <div class="card" onclick="window.location.href='details.html?name=attack on titan'">
+                <img src="attack on titan.jpg" alt="AOT">
+                <div class="card-info">
+                    <h3>Attack On Titan</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
